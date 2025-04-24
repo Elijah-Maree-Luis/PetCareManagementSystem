@@ -1,0 +1,309 @@
+﻿﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model PetCareManagementSystem.Models.AddAppointmentViewModel
+@{
+    ViewData["Title"] = "Appointment";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-tPOO83y0RMCi+ukgr5+3swqQq/LbI8VOfx6LLq2f+/5O7GU8O+ar02rM7BYMj3J/dMW/Mp02I0ALkqpBl75XNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <style>
+        <style >
+        .dot {
+            background-color: transparent;
+            border: 2px solid #000;
+        }
+
+
+        .dot.shaded {
+            border: 2px solid #666B44;
+            background-color: #666B44;
+        }
+
+        .section-title {
+            font-size: 12px;
+        }
+
+            .section-title.active {
+                font-size: 14px;
+                color: #666B44;
+                font-weight: bold;
+            }
+
+        .section-description {
+            font-size: 12px;
+            margin-top: 40px;
+            display: none;
+        }
+
+            .section-description.active {
+                display: block;
+            }
+
+        .location {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            position: relative; /* To position the circle */
+            padding-left: 35px; /* Adjust spacing for the circle */
+        }
+
+        .clinic-item {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+            margin-left: -30px;
+        }
+
+        .clinic-details {
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .flatpickr-day.selected {
+            background-color: #98A17E;
+            border-color: #98A17E;
+        }
+
+            .flatpickr-day.selected:hover {
+                background-color: #98A17E;
+                border-color: #98A17E;
+            }
+
+        .appointment-time {
+            font-size: 12px;
+            border-radius: 20px;
+            margin-right: 10px;
+            width: 80px;
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body style="background-color:#EFE5DC;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-2 text-center">
+                <h6 class="mt-2 section-title active" data-section="1">Book an Appointment<span class="dot shaded" style="position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; transition: background-color 0.3s;"></span></h6>
+            </div>
+            <div class="col-2 text-center">
+                <h6 class="mt-2 section-title" data-section="2">Details<span class="dot" style="position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; transition: background-color 0.3s;"></span></h6>
+            </div>
+            <div class="col-2 text-center">
+                <h6 class="mt-2 section-title" data-section="3">Review<span class="dot" style="position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; transition: background-color 0.3s;"></span></h6>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="section-description active" data-description="1" style="display: flex;">
+            <div class="col-3" style="float: left; margin-left: -110px;">
+                <div class="card card-custom mb-3" style="height: 110px;padding: 20px;width: 300px;background-color: #98A17E;">
+                    <h5 class="form-label" style="font-weight: 700;color:white;">Pet to Consult:</h5>
+                    <select asp-for="PetName" class="form-control" id="petname" style="width: 250px;">
+                        <option value="">Choose Pet</option>
+                        @foreach (var pet in Model.Pet)
+                        {
+                            <option value="@pet.PetID" name="PetID" style=" font-weight: 500;">@pet.PetName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="PetName" class="text-danger"></span>
+                </div>
+
+                <div class="card card-custom mb-3" style="height: 110px;padding: 20px;width: 300px;background-color: #98A17E;">
+                    <h5 class="form-label" style="font-weight: 700;color:white;">Grooming Service:</h5>
+                    <select asp-for="PetName" class="form-control" id="petname" style="width: 250px;">
+                        <option value="">Select Service</option>
+                        <option value="1" style="font-weight: 500;">Bath & Brush</option>
+                        <option value="2" style="font-weight: 500;">Hair Cut</option>
+                        <option value="3" style="font-weight: 500;">Ear Cleaning</option>
+                        <option value="4" style="font-weight: 500;">Teeth Brushing</option>
+                        <option value="5" style="font-weight: 500;">Nail Trimming</option>
+                    </select>
+                    <span asp-validation-for="GroomingService" class="text-danger"></span>
+                </div>
+
+                <div class="card card-custom mb-3" style="height: 250px;padding: 20px;width: 300px;background-color: #98A17E;">
+                    <h6 class="form-label" style="color:white;"><span style="font-weight: 700;">Symptoms or Signs</span>&nbsp;(N/A if none):</h6>
+                    <textarea class="form-control" asp-for="Symptoms" style="width: 250px;height: 1750px"></textarea>
+                    <span asp-validation-for="Symptoms" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div style="background-color: #98A17E; padding: 15px; border-radius: 5px; width: 400px; height: 500px; margin-right: 20px; margin-left: 100px;">
+                <h5 style="color:#fff;">Veterinary Clinics</h5>
+                <div style="margin-bottom: 20px; position: relative; width: 100%;">
+                    <input type="text" id="searchInput" placeholder="Search..." style="width: 100%; padding: 10px; border-radius: 5px; border: none; border-bottom: 1px solid #ccc; padding-left: 30px; background: none; color: white;" onfocus="this.style.outline='none';">
+                    <span style="position: absolute; left: 5px; top: 50%; transform: translateY(-50%); color: white;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search" style="stroke: white; stroke-width: 2;;">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
+                </div>
+                <div style="max-height: 380px; overflow-y: auto;">
+                    @foreach (var clinic in Model.Clinic)
+                    {
+                        <div class="mb-2 location" onclick="selectCard(this)">
+                            <label class="clinic-item">
+                                <input type="radio" name="clinicId" value="@clinic.ClinicID" />
+                                <img src="/clinic/@clinic.ImageFileName" width="75" height="75" style="border-radius:10px;" />
+                                <div class="clinic-details">
+                                    <h5>@clinic.ClinicName</h5>
+                                    <h6><i class='fas fa-map-marker-alt' style='font-size:12px'></i>&nbsp;@clinic.CityAddress</h6>
+                                    <p style="font-size:12px;">@clinic.Description</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div style="margin-bottom: 20px;"></div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-3" id="shedule" style="margin-left: 20px;">
+                <div class="card card-custom mb-3" style="height: 130px;padding: 20px;width: 505px;background-color: #98A17E;">
+                    <div class="form-group">
+                        <h5 class="form-label" style="font-weight: 700;color:white;">Set Appointment Date:</h5>
+                        <input type="text" id="appointmentDate" asp-for="Date" class="form-control" style="width: 300px;background-color:white;margin-top:20px;">
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="card card-custom mb-3" style="height: 160px;padding: 20px;width: 505px;background-color: #98A17E;">
+                    <div class="form-group">
+                        <h5 class="form-label" style="font-weight: 700;color:white;margin-bottom:20px;">Set Appointment Time:</h5>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="08:00">8:00 AM</button>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="09:00">9:00 AM</button>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="10:00">10:00 AM</button>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="11:00">11:00 AM</button>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="12:00">12:00 NN</button>
+                        <div style="margin-bottom:10px;"></div>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="1:00">1:00 PM</button>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="2:00">2:00 PM</button>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="3:00">3:00 PM</button>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="4:00">4:00 PM</button>
+                        <button type="button" class="btn btn-secondary appointment-time" data-time="5:00">5:00 PM</button>
+                        <input type="hidden" id="appointmentTime" name="Time" asp-for="Time" />
+                        <span asp-validation-for="Time" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row justify-content-end" style="margin-top: 75px;margin-right:-275px;margin-left:200px;">
+                    <div class="col-sm-4 d-grid">
+                        <a asp-controller="Appointment" asp-action="Details" class="btn btn-primary" style="background-color: #666B44; border-color: #666B44; width: 120px;font-weight: 700;">Book &nbsp;<span><i class='fas fa-arrow-right'></i></span></a>
+                    </div>
+                    <div class="col-sm-4 d-grid ms-sm-5">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary" style="width: 75px;">Cancel</a>
+                    </div>
+                </div>
+
+            </div>
+
+    </form>
+
+
+
+    <script>
+        function selectCard(card) {
+            var cards = document.querySelectorAll('.mb-2');
+            cards.forEach(function (card) {
+                card.classList.remove('selected'); // Remove 'selected' class from all cards
+            });
+            card.classList.add('selected'); // Add 'selected' class to the clicked card
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentDate = new Date();
+            const currentHour = currentDate.getHours();
+            const closingHour = 17; // 5:00 PM
+            let minDate;
+
+            if (currentHour >= closingHour) {
+                // If it's past 5:00 PM, set minDate to tomorrow
+                const tomorrow = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+                minDate = tomorrow;
+            } else {
+                // Otherwise, set minDate to today
+                minDate = currentDate;
+            }
+
+            flatpickr("#appointmentDate", {
+                // Flatpickr options
+                dateFormat: "m-d-Y", // Change date format to MM-DD-YYYY
+                minDate: minDate, // Set the minimum date dynamically
+                defaultDate: minDate, // Set the default date to the minimum date
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const appointmentButtons = document.querySelectorAll('.appointment-time');
+
+            appointmentButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Reset all buttons to default color
+                    appointmentButtons.forEach(btn => {
+                        btn.classList.remove('active'); // Remove 'active' class from all buttons
+                        btn.style.backgroundColor = ''; // Reset background color
+                        btn.style.color = ''; // Reset text color
+                    });
+
+                    // Set clicked button to new color and mark as active
+                    this.classList.add('active'); // Add 'active' class to clicked button
+                    this.style.backgroundColor = '#666B44'; // Change to your desired color
+                    this.style.color = '#fff'; // Change text color for better contrast
+                });
+
+                button.addEventListener('mouseover', function () {
+                    // Set hover color when mouse is over the button
+                    this.style.backgroundColor = '#666B44'; // Change to your desired color
+                    this.style.color = '#fff'; // Change text color for better contrast
+                });
+
+                button.addEventListener('mouseout', function () {
+                    // Reset color when mouse leaves the button
+                    if (!this.classList.contains('active')) {
+                        this.style.backgroundColor = ''; // Reset background color
+                        this.style.color = ''; // Reset text color
+                    }
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const confirmButton = document.getElementById("confirm-button");
+
+            // Function to navigate to the next section
+            confirmButton.addEventListener("click", function () {
+                // Hide the current section (Details)
+                document.getElementById('details-section').style.display = 'none';
+
+                // Show the next section (Review)
+                document.getElementById('review-section').style.display = 'block';
+
+                // Optionally, update active section indicator (e.g., dot color change)
+                document.querySelector('.section-title[data-section="2"] .dot').classList.remove('shaded');
+                document.querySelector('.section-title[data-section="3"] .dot').classList.add('shaded');
+            });
+        });
+    </script>
+</body>
+</html>

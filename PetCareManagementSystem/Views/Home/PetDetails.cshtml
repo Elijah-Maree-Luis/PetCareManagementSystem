@@ -1,0 +1,606 @@
+﻿﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "PetDetails";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap">
+</head>
+
+<style>
+    .hover-card:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .blur {
+        filter: blur(2px);
+    }
+</style>
+
+<body style="background-color:#EFE5DC;">
+    <div class="container">
+        <div class="row" style="margin-top: 20px; margin-bottom: 20px; ">
+
+            <div class="col" data-section="1" style="margin-left: 11%;">
+                <div class="petcard card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                    <img class="card-img-top" src="~/images/photo/dos.png" alt="Image 1" onclick="showDetails(1, 'Dos', '~/images/photo/dos.png')">
+                    <div class="card-body">
+                        <center><p class="card-text" style="font-weight: 700;">Dos</p></center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col" data-section="1" style="margin-left: -150px;">
+                <div class="petcard card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                    <img class="card-img-top" src="~/images/photo/limbo.png" alt="Image 2" onclick="showDetails(2, 'Limbo', '~/images/photo/limbo.png')" style="margin-top: 20px;">
+                    <div class="card-body">
+                        <center><p class="card-text" style="font-weight: 700;">Limbo</p></center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col" data-section="1" style="margin-left: -150px;">
+                <div class="petcard card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                    <img class="card-img-top" src="~/images/photo/ches.png" alt="Image 3" onclick="showDetails(3, 'Ches', '~/images/photo/ches.png')">
+                    <div class="card-body">
+                        <center><p class="card-text" style="font-weight: 700; margin-top: -5px;">Ches</p></center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col" data-section="1" style="margin-left: -150px;">
+                <div class="petcard card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                    <img class="card-img-top" src="~/images/photo/unna.jpg" alt="Image 4" onclick="showDetails(4, 'Unna', '~/images/photo/unna.jpg')">
+                    <div class="card-body">
+                        <center><p class="card-text" style="font-weight: 700;">Unna</p></center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col" data-section="1" style="margin-left: -150px;">
+                <div class="petcard card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                    <img class="card-img-top" src="~/images/photo/dos.png" alt="Image 5" onclick="showDetails(5, 'Dos', '~/images/photo/dos.png')">
+                    <div class="card-body">
+                        <center><p class="card-text" style="font-weight: 700;">Dos</p></center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col" data-section="1" last-card="1" style="margin-left: -150px;">
+                <div class="petcard card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                    <img class="card-img-top" src="~/images/photo/tres.png" alt="Image 6" onclick="showDetails(6, 'Tres', '~/images/photo/tres.png')">
+                    <div class="card-body">
+                        <center><p class="card-text" style="font-weight: 700;">Tres</p></center>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col" data-section="2" style="margin-left: -150px;">
+                <div class="petcard petadd card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                    <img class="card-img-top" src="~/images/icons/addpet.png" alt="Add Pet" style="width: 100px; margin: 10px 10px 0 10px;">
+                    <div class="card-body">
+                        <center><p class="card-text" style="font-weight: 700;">Add</p></center>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-left: 25%; margin-bottom: -10px;">
+            <div class="col">
+                <div style="background-color: #EFE5DC;">
+                    <p style="font-weight: 700; font-size: 25px; margin-left: -65px;">Details</p>
+                </div>
+            </div>
+
+            <div class="col-6" style="display: flex; margin-top: 10px; left: -150px; border-right: 1px solid #000; box-sizing: border-box; width: 1px; height: 300px;">
+            </div>
+
+            <div class="col">
+                <div class="col-md-6">
+                    <div style="background-color: #EFE5DC;">
+                        <p style="font-weight: 700; font-size: 25px; margin-left: 65px;">Health</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-description" data-description="1">
+            <div class="container" style="margin-top: -245px;">
+                <div class="row">
+                    <div class="col">
+                        <div class="card" style="width: 220px; height: 110px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 10px;">
+                                <p class="card-title" style="text-decoration: underline;">Breed</p>
+                                <h5 class="DetailsBreed card-text" style="font-weight: 700;"></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="width: 220px; height: 190px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding: 10px;">
+                                <p class="card-title" style="text-decoration: underline;">Current Diagnosis</p>
+                                <h3 class="DetailsCurrentDiagnosis card-text" style="font-weight: 700; margin-top: 20px; margin-top: 25%;"></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="margin-left: 15.5%; width: 220px; height: 110px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 10px;">
+                                <p class="card-title" style="text-decoration: underline;">Allergies</p>
+                                <h5 class="HealthAllergies card-text" style="font-weight: 700;"></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="margin-top: 10%; margin-left: 5%; width: 220px; height: 55px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 10px;">
+                                <p class="card-title" style="text-decoration: underline; font-size: 20px;">Neutered</p>
+                                <img class="HealthNeutered card-img-right" src="~/images/icons/cross.png" alt="Neutered" style="height: 40px; width: auto; margin: -70px 0 0 150px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: -70px;">
+                    <div class="col">
+                        <div class="card" style="width: 220px; height: 70px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 5px;">
+                                <p class="card-title" style="text-decoration: underline;">Gender</p>
+                                <h5 class="DetailsGender card-text" style="font-weight: 700;"></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="margin-top: -3%; margin-left: 55%; width: 220px; height: 55px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 10px;">
+                                <p class="card-title" style="text-decoration: underline; font-size: 20px;">Medications</p>
+                                <img class="HealthMedications card-img-right" src="~/images/icons/cross.png" alt="Medications" style="height: 40px; width: auto; margin: -70px 0 0 150px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col">
+                        <div class="card" style="width: 220px; height: 70px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 5px;">
+                                <p class="card-title" style="text-decoration: underline;">Birthday</p>
+                                <h5 class="DetailsBirthday card-text" style="font-weight: 700;"></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="margin-left: 0; width: 220px; height: 70px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 5px;">
+                                <p class="card-title" style="text-decoration: underline;">Weight</p>
+                                <h5 class="DetailsWeight card-text" style="font-weight: 700;"></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col" style="margin-top: -80px;">
+                        <div class="card" style="margin-left: 15.5%; width: 220px; height: 150px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 5px;">
+                                <p class="card-title" style="text-decoration: underline;">Medical History</p>
+                                <h5 class="HealthMedicalHistory card-text" style="font-weight: 700;"></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="margin-top: -7%; margin-left: 6%; width: 220px; height: 55px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 10px;">
+                                <p class="card-title" style="text-decoration: underline; font-size: 20px;">Vaccinated</p>
+                                <img class="HealthVaccinated card-img-right" src="~/images/icons/cross.png" alt="Vaccinated" style="height: 40px; width: auto; margin: -70px 0 0 150px;">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="section-description" data-description="2">
+            <div class="container">
+                <div class="row">
+                    <div class="col" style="margin-top: -23%; margin-left: 5%;">
+                        <p style="font-weight: 700;">Pet Picture</p>
+                    </div>
+
+                    <div class="col" style="margin-top: -20%; margin-left: -10%;">
+                        <p style="font-weight: 500;">Name</p>
+                    </div>
+
+                    <div class="col" style="margin-top: -20%; margin-left: -8%;">
+                        <p style="font-weight: 500;">Breed</p>
+                    </div>
+
+                    <div class="col" style="margin-top: -22%; margin-left: -5%;">
+                        <p style="font-weight: 500;">Allergies</p>
+                    </div>
+
+                    <div class="col" style="height: 1px;">
+                        <div class="card" style="top: -240px; margin-left: 15.5%; width: 210px; height: 70px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 10px;">
+                                <p class="card-title">Is Your Pet Neutered?</p>
+                                <div class="form-check1">
+                                    <label class="form-check-label1" for="NeuteredYes" style="margin-left: 20px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="NeuteredYes">Yes
+                                    </label>
+                                    <label class="form-check-label1" for="NeuteredNo" style="margin-left: 50px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="NeuteredNo">No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col" style="margin-top: -17%; margin-left: 18.5%;">
+                        <input type="text" class="FormName form-control" placeholder="Enter Name" style="width: 150px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                    </div>
+
+                    <div class="col" style="margin-top: -17%; margin-left: -7%;">
+                        <input type="text" class="FormBreed form-control" placeholder="Enter Breed" style="width: 150px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                    </div>
+
+                    <div class="col" style="margin-top: -19%; margin-left: -4%;">
+                        <input type="text" class="FormAllergies form-control" placeholder="Enter Allergies" style="height: 90px; width: 250px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                    </div>
+
+                    <div class="col" style="height: 1px;">
+                        <div class="card" style="top: -165px; margin-left: 11%; width: 210px; height: 70px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 10px;">
+                                <p class="card-title">Is Your Pet In Medication?</p>
+                                <div class="form-check2">
+                                    <label class="form-check-label2" for="MedicationYes" style="margin-left: 20px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="MedicationYes">Yes
+                                    </label>
+                                    <label class="form-check-label2" for="MedicationNo" style="margin-left: 50px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault2" id="MedicationNo">No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="UploadButton btn btn-primary btn-lg" style="margin-top: -60%; background-color: #A8B581; border-color: #A8B581; width: 175px;"><img src="~/images/icons/upload.png" alt="Upload" style="height: 20px; width: 20px;"> Upload</button>
+                    </div>
+
+                    <div class="col" style="height: 1px; margin-top: -13%; margin-left: -47%;">
+                        <p style="font-weight: 500;">Gender</p>
+                    </div>
+
+                    <div class="col" style="height: 1px; margin-top: -13%; margin-left: -50%;">
+                        <p style="font-weight: 500;">Birthday</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col" style="margin-top: -12%; margin-left: 18.5%;">
+                        <div class="dropdown">
+                            <button class="FormGender btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: white; color: gray; width: 150px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">Choose</button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li><button class="dropdown-item" type="button" onclick="selectGender('Male')">Male</button></li>
+                                <li><button class="dropdown-item" type="button" onclick="selectGender('Female')">Female</button></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col" style="height: 1px; width: 1px; margin-top: -12%; margin-left: -50%;">
+                        <input type="text" class="FormBirthday form-control" placeholder="Month/Day/Year" style="width: 150px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <span class="ImagePreview border border-secondary" style="margin: -180px 10px 10px 11px; height: 175px; width: 175px;"></span>
+
+                    <div class="col" style="margin-top: -7%; margin-left: 1%;">
+                        <p style="font-weight: 500;">Weight</p>
+                    </div>
+
+                    <div class="col" style="margin-top: -7%; margin-left: -8%;">
+                        <p style="font-weight: 500;">Current Diagnosis</p>
+                    </div>
+
+                    <div class="col" style="height: 1px; width: -10px; margin-top: -12%; margin-left: -5%;">
+                        <p style="font-weight: 500;">Medical History</p>
+                    </div>
+
+                    <div class="col" style="height: 1px;">
+                        <div class="card" style="top: -115px; margin-left: 15%; width: 210px; height: 70px; background-color: white; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                            <div class="card-body" style="padding-left: 10px; padding-top: 10px;">
+                                <p class="card-title">Is Your Pet In Vaccinated?</p>
+                                <div class="form-check3">
+                                    <label class="form-check-label3" for="VaccinatedYes" style="margin-left: 20px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault3" id="VaccinatedYes">Yes
+                                    </label>
+                                    <label class="form-check-label3" for="VaccinatedNo" style="margin-left: 50px;">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault3" id="VaccinatedNo">No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col" style="margin-top: -4%; margin-left: 18.5%;">
+                        <input type="text" class="FormWeight form-control" placeholder="Enter Weight in kg" style="width: 150px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                    </div>
+
+                    <div class="col" style="margin-top: -4%; margin-left: -50%;">
+                        <input type="text" class="FormDiagnosis form-control" placeholder="Enter Diagnosis" style="width: 150px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                    </div>
+                </div>
+
+                <div class="col" style="width: 1px; margin-top: -10%; margin-left: 52%;">
+                    <input type="text" class="FormMedicalHistory form-control" placeholder="Enter Medical History" style="height: 100px; width: 250px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);">
+                </div>
+
+                <div class="col">
+                    <button type="button" class="RegisterButton btn btn-primary btn-lg" style="margin-top: -3%; margin-left: 82.5%; background-color: #A8B581; border-color: #A8B581; width: 210px;">Register Pet</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function showDetails(petName) {
+                if (petName === 'Unna') {
+                    document.querySelector('.DetailsBreed').textContent = 'Finish Lapphaund';
+                    document.querySelector('.DetailsGender').textContent = 'Female';
+                    document.querySelector('.DetailsBirthday').textContent = 'June 3';
+                    document.querySelector('.DetailsCurrentDiagnosis').textContent = 'None';
+                    document.querySelector('.DetailsWeight').textContent = '20 kg';
+                    document.querySelector('.HealthAllergies').textContent = 'None';
+                    document.querySelector('.HealthMedicalHistory').textContent = 'October 2: Kennel Cough';
+                    document.querySelector('.HealthNeutered').src = '/images/icons/check.png';
+                    document.querySelector('.HealthMedications').src = '/images/icons/cross.png';
+                    document.querySelector('.HealthVaccinated').src = '/images/icons/check.png';
+                }
+                else if (petName === 'Dos') {
+                    document.querySelector('.DetailsBreed').textContent = 'Labrador';
+                    document.querySelector('.DetailsGender').textContent = 'Male';
+                    document.querySelector('.DetailsBirthday').textContent = 'January 9';
+                    document.querySelector('.DetailsCurrentDiagnosis').textContent = 'Seizure';
+                    document.querySelector('.DetailsWeight').textContent = '18 kg';
+                    document.querySelector('.HealthAllergies').textContent = 'None';
+                    document.querySelector('.HealthMedicalHistory').textContent = 'October 2: Kennel Cough';
+                    document.querySelector('.HealthNeutered').src = '/images/icons/cross.png';
+                    document.querySelector('.HealthMedications').src = '/images/icons/cross.png';
+                    document.querySelector('.HealthVaccinated').src = '/images/icons/check.png';
+                }
+
+                else if (petName === 'Tres') {
+                    document.querySelector('.DetailsBreed').textContent = 'Golden Retriever';
+                    document.querySelector('.DetailsGender').textContent = 'Male';
+                    document.querySelector('.DetailsBirthday').textContent = 'November 5';
+                    document.querySelector('.DetailsCurrentDiagnosis').textContent = 'Eating-Refusal to Eat';
+                    document.querySelector('.DetailsWeight').textContent = '18 kg';
+                    document.querySelector('.HealthAllergies').textContent = 'In belly';
+                    document.querySelector('.HealthMedicalHistory').textContent = 'September 2: Seizures';
+                    document.querySelector('.HealthNeutered').src = '/images/icons/cross.png';
+                    document.querySelector('.HealthMedications').src = '/images/icons/check.png';
+                    document.querySelector('.HealthVaccinated').src = '/images/icons/cross.png';
+                }
+
+                else if (petName === 'Ches') {
+                    document.querySelector('.DetailsBreed').textContent = '?';
+                    document.querySelector('.DetailsGender').textContent = '?';
+                    document.querySelector('.DetailsBirthday').textContent = '?';
+                    document.querySelector('.DetailsCurrentDiagnosis').textContent = '?';
+                    document.querySelector('.DetailsWeight').textContent = '?';
+                    document.querySelector('.HealthAllergies').textContent = '?';
+                    document.querySelector('.HealthMedicalHistory').textContent = '?';
+                    document.querySelector('.HealthNeutered').src = '/images/icons/cross.png';
+                    document.querySelector('.HealthMedications').src = '/images/icons/cross.png';
+                    document.querySelector('.HealthVaccinated').src = '/images/icons/cross.png';
+                }
+
+                else if (petName === 'Limbo') {
+                    document.querySelector('.DetailsBreed').textContent = '?';
+                    document.querySelector('.DetailsGender').textContent = '?';
+                    document.querySelector('.DetailsBirthday').textContent = '?';
+                    document.querySelector('.DetailsCurrentDiagnosis').textContent = '?';
+                    document.querySelector('.DetailsWeight').textContent = '?';
+                    document.querySelector('.HealthAllergies').textContent = '?';
+                    document.querySelector('.HealthMedicalHistory').textContent = '?';
+                    document.querySelector('.HealthNeutered').src = '/images/icons/cross.png';
+                    document.querySelector('.HealthMedications').src = '/images/icons/cross.png';
+                    document.querySelector('.HealthVaccinated').src = '/images/icons/cross.png';
+                }
+
+                showSection(1);
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const cards = document.querySelectorAll('.petcard');
+
+                cards.forEach(card => {
+                    card.addEventListener('click', function () {
+                        cards.forEach(c => {
+                            c.classList.remove('blur');
+                        });
+
+                        cards.forEach(c => {
+                            if (c !== card) {
+                                c.classList.add('blur');
+                            }
+                        });
+
+                        const petName = card.querySelector('.card-text').textContent.trim();
+                        showDetails(petName);
+                    });
+                });
+            });
+
+            function showSection(sectionNumber) {
+                const section1 = document.querySelector('[data-description="1"]');
+                const section2 = document.querySelector('[data-description="2"]');
+
+                if (sectionNumber === 1) {
+                    section1.style.display = 'block';
+                    section2.style.display = 'none';
+                } else if (sectionNumber === 2) {
+                    section1.style.display = 'none';
+                    section2.style.display = 'block';
+                }
+            }
+
+            const cards = document.querySelectorAll('.petcard');
+            cards.forEach(card => {
+                card.addEventListener('click', function () {
+                    cards.forEach(c => {
+                        c.classList.remove('blur');
+                    });
+
+                    cards.forEach(c => {
+                        if (c !== card) {
+                            c.classList.add('blur');
+                        }
+                    });
+
+                    const petName = card.querySelector('.card-text').textContent.trim();
+
+                    showDetails(petName);
+                });
+            });
+
+            const addPetCard = document.querySelector('[data-section="2"]');
+            if (addPetCard) {
+                addPetCard.addEventListener('click', function () {
+                    showSection(2);
+                });
+            }
+
+            showSection(1);
+        });
+    </script>
+
+    <script>
+        function selectGender(gender) {
+            document.getElementById('dropdownMenu2').innerText = gender;
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadButton = document.querySelector('.UploadButton');
+            const registerButton = document.querySelector('.RegisterButton');
+
+            uploadButton.addEventListener('click', () => {
+                // image upload
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+
+                fileInput.onchange = () => {
+                    const file = fileInput.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => {
+                            const imgPreview = document.querySelector('.ImagePreview');
+                            imgPreview.innerHTML = `<img src="${reader.result}" style="margin-left: -12px; max-width: 173px; max-height: 173px;">`;
+                        };
+                    }
+                };
+
+                fileInput.click(); // file input
+            });
+
+            registerButton.addEventListener('click', () => {
+                const formName = document.querySelector('.FormName').value;
+                const formBreed = document.querySelector('.FormBreed').value;
+                const formGender = document.querySelector('.FormGender').innerText;
+                const formBirthday = document.querySelector('.FormBirthday').value;
+                const formWeight = document.querySelector('.FormWeight').value;
+                const formDiagnosis = document.querySelector('.FormDiagnosis').value;
+                const formAllergies = document.querySelector('.FormAllergies').value;
+                const formMedicalHistory = document.querySelector('.FormMedicalHistory').value;
+
+                // check and cross
+                const neuteredStatus = document.querySelector('#NeuteredYes').checked ? 'Yes' : 'No';
+                const medicationStatus = document.querySelector('#MedicationYes').checked ? 'Yes' : 'No';
+                const vaccinatedStatus = document.querySelector('#VaccinatedYes').checked ? 'Yes' : 'No';
+
+                // petID increment
+                const petId = document.querySelectorAll('.petcard').length + 1;
+
+                // new petcard
+                const newPetCard = `
+                                        <div class="col" data-section="1" style="margin-left: -150px;">
+                                            <div class="petcard card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                                                <img class="card-img-top" src="${document.querySelector('.ImagePreview img').src}" alt="Image ${petId}" onclick="showDetails(${petId}, '${formName}', '${document.querySelector('.ImagePreview img').src}')">
+                                                <div class="card-body">
+                                                    <center><p class="card-text" style="font-weight: 700;">${formName}</p></center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+
+                // inserting the created petcard after the last-card="1"
+                const targetElement = document.querySelector('.col[last-card="1"]');
+
+                if (targetElement) {
+                    const newPetCardElement = document.createElement('div');
+                    newPetCardElement.innerHTML = newPetCard;
+
+                    targetElement.insertAdjacentHTML('afterend', newPetCard);
+                }
+
+                // clear form after a successful registration
+                document.querySelectorAll('input[type="text"]').forEach(input => (input.value = ''));
+                document.querySelectorAll('input[type="radio"]').forEach(input => (input.checked = false));
+                document.querySelector('.ImagePreview').innerHTML = ''; // clear image preview
+            });
+
+            // changing format to MM dd, yyyy
+            const formatBirthday = (birthdayInput) => {
+                const [month, day, year] = birthdayInput.split(/[\/\s]/);
+                const dateObj = new Date(year, month - 1, day);
+                return dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            };
+
+            const formBirthday = document.querySelector('.FormBirthday');
+            formBirthday.addEventListener('change', () => {
+                formBirthday.value = formatBirthday(formBirthday.value);
+            });
+        });
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+</body>

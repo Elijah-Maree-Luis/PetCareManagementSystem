@@ -1,0 +1,51 @@
+﻿@page
+@model ExternalLoginModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+@if (!string.IsNullOrEmpty(Model.Input?.Email))
+{
+    <script>
+        console.log("Email Address:", "@Model.Input.Email");
+    </script>
+}
+
+<div style="max-width: 600px; margin: 0 auto; margin-top:20px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin-bottom: 20px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); text-align: center;">
+    <a>
+        <img src="~/images/icons/Newlogo.png" style="width:200px; margin-top:5px; margin-bottom:10px;" />
+    </a>
+    <h1 style="font-size: 1.2em; margin-bottom: 10px;">Welcome!</h1>
+<!--<h2 id="external-login-title" style="font-size: 1.2em; margin-bottom: 10px;">Associate your @Model.ProviderDisplayName account.</h2>-->
+    <hr />
+
+    <p id="external-login-description" style="font-size: 1em; margin-bottom: 20px;">
+        You've successfully authenticated with <strong>FurfectCare using @Model.ProviderDisplayName</strong>.
+        <Br />Our community guidelines serve as the backbone of our platform, fostering an environment of respect, inclusivity, 
+        and collaboration among all members. Together, we contribute to a vibrant and thriving community that empowers and inspires each of its members
+    </p>
+
+    <div class="row" style="display: flex; justify-content: center;">
+        <div class="col-md-4">
+            <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div style="position: relative; margin-bottom: 1rem; display:none;">
+                    <input style="font-size: 1em; padding: 1rem 1rem 0.5rem; border: none; border-bottom: 1px solid #ced4da; background-color: transparent; border-radius: 0; display:none;" asp-for="Input.Email" class="form-control" autocomplete="email" placeholder=" " />
+                    <label style="position: absolute; top: 0; left: 0; padding: 1rem 1rem 0; font-size: 0.85em; color: #777; pointer-events: none; transition: all 0.3s ease;" asp-for="Input.Email" class="form-label">Email Address</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div style="margin-bottom: 1rem; max-width:500px;">
+                    <input class="form-check-input" type="checkbox" id="confirmationCheckbox" required>
+                    <label style="font-size: 0.9em; margin-top: 0.25rem;" class="form-check-label" for="confirmationCheckbox">
+                        I have read the privacy policy and the community guidelines of <strong>FurfectCare</strong>
+                    </label>
+                </div>
+                <button type="submit" style="font-size: 1em; padding: 0.75rem 1rem; width: 100%;" class="btn btn-lg btn-primary btn-register">Allow Access</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

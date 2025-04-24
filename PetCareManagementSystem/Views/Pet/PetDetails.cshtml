@@ -1,0 +1,300 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<PetCareManagementSystem.Models.Pet>
+@{
+    ViewData["Title"] = "PetDetails";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-o8UGK2T48zzlQFb93eajLH51t6ZmE1POQKdyNcAb3quzC2JvY5P/27pLXGW+8UUTe6cKJyOXzYkxwbsbARmKFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<style>
+    .petcard {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+        .petcard img {
+            width: 100%;
+            height: auto;
+            transition: filter 0.3s ease;
+        }
+
+        .petcard:hover img {
+            filter: blur(2px);
+        }
+
+        .petcard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .petcard:hover::before {
+            opacity: 1;
+        }
+
+        .petcard:hover .actions {
+            display: block;
+        }
+
+    .actions {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    .petcard:hover .actions {
+        display: flex; /* Display on hover */
+    }
+
+    .actions .delete-button {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        margin: 5px;
+    }
+
+    .actions .edit-button {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .hover-card:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .blur {
+        filter: blur(2px);
+    }
+
+    .details-header {
+        font-weight: 700;
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .card-custom {
+        width: 220px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+        margin-bottom: 10px;
+    }
+
+        .card-custom .card-body {
+            padding-left: 10px;
+            padding-top: 5px;
+        }
+
+    .card-title {
+        text-decoration: underline;
+    }
+</style>
+
+<body style="background-color:#EFE5DC;">
+    @if (!Model.Any())
+    {
+        <div class="col-auto text-center" style="margin-top:200px;">
+            <h5>You have no pets at the moment. Click on this <a asp-controller="Pet" asp-action="Add" style="color:#666B44;">link</a> to register your pet!</h5>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                @foreach (var pet in Model)
+                {
+                    <div class="col-auto">
+                        <div class="petcard card hover-card mx-1 my-2" style="height: 160px; width: 120px;"
+                             data-pet-id="@pet.PetID"
+                             data-pet-name="@pet.PetName"
+                             data-pet-breed="@pet.Breed"
+                             data-pet-gender="@pet.Gender"
+                             data-pet-birthday="@pet.Birthday.ToString("MM/dd/yyyy")"
+                             data-pet-age="@pet.Age"
+                             data-pet-current-diagnosis="@pet.CurrentDiagnosis"
+                             data-pet-weight="@pet.Weight"
+                             data-pet-allergies="@pet.Allergies"
+                             data-pet-medical-history="@pet.MedicalHistory"
+                             data-pet-neutered="@pet.Neutered"
+                             data-pet-medications="@pet.Medications"
+                             data-pet-vaccinated="@pet.Vaccinated">
+                            <img class="card-img-top pet" src="/pet/@pet.ImageFileName" alt="Pet Image" style="height:110px;width:120px;">
+                            <div class="actions">
+                                <a asp-controller="Pet" asp-action="Delete" asp-route-id="@pet.PetID"
+                                   onclick="return confirm('Are you sure you want to delete this pet profile?')"
+                                   class="btn btn-primary delete-button" style="background-color: transparent; border-color: transparent;">
+                                    <i class="fas fa-times" style="font-size: 12px; color: #dc3545;"></i>
+                                </a>
+                                <a asp-controller="Pet" asp-action="Edit" asp-route-id="@pet.PetID" class="btn btn-primary edit-button" style="background-color: transparent; border-color: transparent;">
+                                    <i class="fas fa-edit" style="font-size: 18px; color: #636376; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;">&nbsp;Edit</i>
+                                </a>
+                            </div>
+                            <div class="card-body text-center">
+                                <p class="card-text font-weight-bold">@pet.PetName</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="col-auto">
+                    <div class="petadd card hover-card mx-1 my-2" style="height: 160px; width: 120px;">
+                        <a asp-controller="Pet" asp-action="Add" style="text-decoration:none;color:black;">
+                            <img class="card-img-top" src="~/images/icons/addpet.png" alt="Add Pet" style="width: 100px; margin: 10px;">
+                            <div class="card-body text-center">
+                                <p class="card-text font-weight-bold">Add Pet</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="width: 100%; margin-left:-25px;margin-top:20px;">
+            <div class="col-6" id="details">
+                <p class="details-header text-center" style="font-weight: 700; font-size: 25px;">Details</p>
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col-auto">
+                        <div class="card card-custom" style="height: 110px;">
+                            <div class="card-body">
+                                <p class="card-title">Breed</p>
+                                <h5 class="card-text" id="breed"></h5>
+                            </div>
+                        </div>
+                        <div class="card card-custom" style="height: 70px;">
+                            <div class="card-body">
+                                <p class="card-title">Gender</p>
+                                <h5 class="card-text" id="gender"></h5>
+                            </div>
+                        </div>
+                        <div class="card card-custom" style="height: 70px;">
+                            <div class="card-body">
+                                <p class="card-title">Birthday</p>
+                                <h5 class="card-text" id="birthday"></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto" style="margin-left: 75px;">
+                        <div class="card card-custom" style="height: 70px;">
+                            <div class="card-body">
+                                <p class="card-title">Age</p>
+                                <h5 class="card-text" id="age"></h5>
+                            </div>
+                        </div>
+                        <div class="card card-custom" style="height: 120px;">
+                            <div class="card-body">
+                                <p class="card-title">Current Diagnosis</p>
+                                <h3 class="card-text" id="currentDiagnosis"></h3>
+                            </div>
+                        </div>
+                        <div class="card card-custom" style="height: 70px;">
+                            <div class="card-body">
+                                <p class="card-title">Weight (in kg)</p>
+                                <h5 class="card-text" id="weight"></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-auto divider" style="margin-left:-50px;">
+                <div class="vertical-divider" style="border-left: 1px solid #000; height: 300px; margin-top:50px;"></div>
+            </div>
+
+            <div class="col-6" id="health">
+                <p class="details-header text-center" style="font-weight: 700; font-size: 25px;">Health</p>
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col-auto">
+                        <div class="card card-custom" style="height: 110px;">
+                            <div class="card-body">
+                                <p class="card-title">Allergies</p>
+                                <h5 class="card-text" id="allergies"></h5>
+                            </div>
+                        </div>
+                        <div class="card card-custom" style="height: 150px;">
+                            <div class="card-body" style="overflow-y: auto; font-size: 12px;">
+                                <p class="card-title">Medical History</p>
+                                <p class="card-text" id="medicalHistory">
+                                    <!-- Your medical history content goes here -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto" style="margin-left: 75px;">
+                        <div class="card card-custom" style="height: 70px;">
+                            <div class="card-body">
+                                <p class="card-title">Is Neutered</p>
+                                <h5 class="card-text" id="neutered"></h5>
+                            </div>
+                        </div>
+                        <div class="card card-custom" style="height: 70px;">
+                            <div class="card-body">
+                                <p class="card-title">Is in Medication(s)</p>
+                                <h5 class="card-text" id="medications"></h5>
+                            </div>
+                        </div>
+                        <div class="card card-custom" style="height: 70px;">
+                            <div class="card-body">
+                                <p class="card-title">Is Vaccinated</p>
+                                <h5 class="card-text" id="vaccinated"></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const petCards = document.querySelectorAll('.petcard');
+            petCards.forEach(card => {
+                card.addEventListener('click', function () {
+                    document.getElementById('breed').innerText = card.getAttribute('data-pet-breed');
+                    document.getElementById('gender').innerText = card.getAttribute('data-pet-gender');
+                    document.getElementById('birthday').innerText = card.getAttribute('data-pet-birthday');
+                    document.getElementById('age').innerText = card.getAttribute('data-pet-age');
+                    document.getElementById('currentDiagnosis').innerText = card.getAttribute('data-pet-current-diagnosis');
+                    document.getElementById('weight').innerText = card.getAttribute('data-pet-weight');
+                    document.getElementById('allergies').innerText = card.getAttribute('data-pet-allergies');
+                    document.getElementById('medicalHistory').innerText = card.getAttribute('data-pet-medical-history');
+                    document.getElementById('neutered').innerText = card.getAttribute('data-pet-neutered');
+                    document.getElementById('medications').innerText = card.getAttribute('data-pet-medications');
+                    document.getElementById('vaccinated').innerText = card.getAttribute('data-pet-vaccinated');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

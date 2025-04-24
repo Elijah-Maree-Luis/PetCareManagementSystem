@@ -1,0 +1,122 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!--<h1>@ViewData["Title"]</h1>-->
+<body style="background-color: #EFE5DC;">
+<style>
+
+    .btn-social {
+        display: inline-flex; /* Change to inline-flex to allow width adjustment */
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        text-decoration: none;
+        outline: none;
+            width: 237px; /* Adjust the width as needed */
+        margin-right: 20px; /* Add margin between the buttons */
+    }
+
+        .btn-social:last-child {
+            margin-right: 0; /* Remove margin from the last button */
+        }
+
+        .btn-social:hover {
+            background-color: #f0f0f0;
+            border-color: #ccc;
+        }
+
+        .btn-social img {
+            max-height: 20px;
+            margin-right: 5px;
+        }
+</style>
+</body>
+<!--<div class="row">
+    <div class="col-md-4">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2>Create a new account.</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Email">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.Password">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        </form>
+    </div>-->
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card " style="border-radius: 12px;">
+                <a>
+                    <img src="~/images/icons/PetCareLogo.png" style="width:160px; margin-top:10px;" />
+                </a>
+                <div class="card-body ">
+                    <h5 class="card-title">Register your account.</h5>
+                    <hr />
+                @{
+                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                    {
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article about setting up this ASP.NET application to support logging in via external services</a>.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal mb-5">
+                                <div class="d-flex">
+                                    <div class="mb-2 me-2">
+                                        <button id="link-login-button-Google" type="submit" class="btn btn-social btn-google rounded-pill" name="provider" value="Google" title="Log in using your Google account">
+                                            <img src="~/images/icons/google-icon.png" alt="Google" class="social-icon"> Google
+                                        </button>
+                                    </div>
+                                    <div class="mb-2">
+                                        <button id="link-login-button-Facebook" type="submit" class="btn btn-social btn-facebook rounded-pill" name="provider" value="Facebook" title="Log in using your Facebook account">
+                                            <img src="~/images/icons/facebook-icon.png" alt="Facebook" class="social-icon"> Facebook
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                    }
+                }
+                <div>
+                    <p>
+                        Already have an account?
+                    </p>
+                        <p>
+                            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="fs-6">Login your account here.</a>
+                        </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

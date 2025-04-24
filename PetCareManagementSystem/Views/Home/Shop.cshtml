@@ -1,0 +1,104 @@
+﻿@model List<Inventory>
+@{
+    ViewData["Title"] = "Shop";
+}
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <style>
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+            .card:hover {
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+        .card-img-top {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body style="background-color:#EFE5DC;">
+    <div class="container ">
+        <div class="row mt-2 justify-content-center align-items-center">
+            <div class="col-6">
+                <div class="d-flex align-items-center flex-wrap">
+                    <h6 class="mr-3 mb-2">Animal Categories:</h6>
+                    <span class="badge badge-pill badge-secondary mr-2 mb-2" style="font-size: 14px; padding:8px;">Dog</span>
+                    <span class="badge badge-pill badge-secondary mr-2 mb-2" style="font-size: 14px; padding:8px;">Cat</span>
+                    <span class="badge badge-pill badge-secondary mr-2 mb-2" style="font-size: 14px; padding:8px;">Bird</span>
+                    <span class="badge badge-pill badge-secondary mr-2 mb-2" style="font-size: 14px; padding:8px;">Rabbit</span>
+                    <span class="badge badge-pill badge-secondary mr-2 mb-2" style="font-size: 14px; padding:8px;">Chicken</span>
+                    <span class="badge badge-pill badge-secondary mr-2 mb-2" style="font-size: 14px; padding:8px;">Snake</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="d-flex flex-wrap justify-content-center">
+                    <!-- Cards -->
+                    @foreach (var inventory in Model)
+                        {
+                            <div class="card m-2" style="width: 20rem;">
+                                <div class="card-body d-flex align-items-center">
+                                <img src="/product/@inventory.ImageFileName" class="mr-3 card-img-top" alt="Animal Image">
+                                    <div>
+                                        <h5 class="card-title mb-1" style="font-size: 16px;">@inventory.ProductName</h5>
+                                        <p class="card-text mb-1" style="font-size: 14px;">@inventory.Description</p>
+                                        <p class="card-text mb-1" style="font-size: 14px;">@inventory.Price</p>
+                                        <!-- First card -->
+                                        <div class="input-group input-group-sm mb-3" style="width: 90px;">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-secondary minusBtn" type="button" style="padding: 0.25rem 0.5rem; font-size: 10px; width: 26px; height:25px;">-</button>
+                                            </div>
+                                            <input type="text" class="form-control text-center quantityInput" placeholder="Qty" aria-label="Quantity" aria-describedby="minusBtn plusBtn" style="padding: 0.25rem 0.5rem; font-size: 10px; width: 40px;" value="0">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary plusBtn" type="button" style="padding: 0.25rem 0.5rem; font-size: 10px; width: 26px; height:25px;">+</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-inline-flex rounded-pill overflow-hidden">
+                                            <button class="btn btn-sm" style="padding: 5px; background-color: #EDEDED;"><img src="~/images/icons/addcart.png" alt="Cart Icon" width="16" height="16"></button>
+                                            <button class="btn btn-sm" style="background-color: orange;">Buy Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+       <script>
+                    // Add event listeners to all plus buttons
+                    document.querySelectorAll('.plusBtn').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const parentDiv = this.closest('.input-group');
+                            const quantityInput = parentDiv.querySelector('.quantityInput');
+                            let currentQty = parseInt(quantityInput.value);
+                            quantityInput.value = ++currentQty;
+                        });
+                    });
+
+                    // Add event listeners to all minus buttons
+                    document.querySelectorAll('.minusBtn').forEach(button => {
+                        button.addEventListener('click', function () {
+                            const parentDiv = this.closest('.input-group');
+                            const quantityInput = parentDiv.querySelector('.quantityInput');
+                            let currentQty = parseInt(quantityInput.value);
+                            if (currentQty > 0) {
+                                quantityInput.value = --currentQty;
+                            }
+                        });
+                    });
+
+                                </script>
+</body>

@@ -1,0 +1,544 @@
+﻿﻿@{
+    ViewData["Title"] = "Appointment";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-tPOO83y0RMCi+ukgr5+3swqQq/LbI8VOfx6LLq2f+/5O7GU8O+ar02rM7BYMj3J/dMW/Mp02I0ALkqpBl75XNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .dot {
+            background-color: transparent;
+            border: 2px solid #000;
+        }
+
+        .dot.shaded {
+            border: 2px solid #666B44;
+            background-color: #666B44;
+        }
+
+        .section-title {
+            font-size: 12px;
+        }
+
+        .section-title.active {
+            font-size: 14px;
+            color: #666B44;
+            font-weight: bold;
+        }
+
+        .section-description {
+            font-size: 12px;
+            margin-top: 40px;
+            display: none;
+        }
+
+            .section-description.active {
+                display: block;
+            }
+        /* Calendar CSS */
+        .calendar {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+            .days div {
+                color: #000;
+                text-align: center;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: #gray;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+                .days div:hover {
+                    background-color: #e0e0e0;
+                }
+
+        .location {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            position: relative; /* To position the circle */
+            padding-left: 35px; /* Adjust spacing for the circle */
+        }
+
+        .circle {
+            position: absolute;
+            left: 5px; /* Adjust distance from left */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+        }
+
+        .location.selected .circle {
+            background-color: #666B44; /* Change background color when selected */
+            border-color: #666B44; /* Change border color when selected */
+        }
+    </style>
+</head>
+<body style="background-color:#EFE5DC;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-2 text-center">
+                <h6 class="mt-2 section-title active" data-section="1">Book an Appointment<span class="dot shaded" style="position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; transition: background-color 0.3s;"></span></h6>
+            </div>
+            <div class="col-2 text-center">
+                <h6 class="mt-2 section-title" data-section="2">Details<span class="dot" style="position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; transition: background-color 0.3s;"></span></h6>
+            </div>
+            <div class="col-2 text-center">
+                <h6 class="mt-2 section-title" data-section="3">Review<span class="dot" style="position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; transition: background-color 0.3s;"></span></h6>
+            </div>
+        </div>
+    </div>
+    <div class="section-description active" data-description="1">
+        <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 20px;">
+            <div style="background-color: #98A17E; padding: 15px; border-radius: 5px;">
+                <h5 style="color:#fff;">Veterenary Clinics</h5>
+                <!-- Adding search bar and vertical cards inside the left grid -->
+                <div style="margin-bottom: 20px; position: relative; width: 100%;">
+                    <input type="text" placeholder="Search..." style="width: 100%; padding: 10px; border-radius: 5px; border: none; border-bottom: 1px solid #ccc; padding-left: 30px; background: none; color: white;" onfocus="this.style.outline='none';">
+                    <span style="position: absolute; left: 5px; top: 50%; transform: translateY(-50%); color: white;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search" style="stroke: white; stroke-width: 2;">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
+                </div>
+                <div class="mb-2 location" onclick="selectCard(this)">
+                    <div class="circle"></div> <!-- Circle element -->
+                    <h6>Card 1</h6>
+                    <p>Content for card 1</p>
+                </div>
+                <div class="mb-2 location" onclick="selectCard(this)">
+                    <div class="circle"></div> <!-- Circle element -->
+                    <h6>Card 2</h6>
+                    <p>Content for card 2</p>
+                </div>
+                <div class="mb-2 location" onclick="selectCard(this)">
+                    <div class="circle"></div> <!-- Circle element -->
+                    <h6>Card 3</h6>
+                    <p>Content for card 3</p>
+                </div>
+
+                <script>
+                    function selectCard(card) {
+                        var cards = document.querySelectorAll('.mb-2');
+                        cards.forEach(function (card) {
+                            card.classList.remove('selected'); // Remove 'selected' class from all cards
+                        });
+                        card.classList.add('selected'); // Add 'selected' class to the clicked card
+                    }
+                </script>
+
+            </div>
+            <div style="padding: 20px; border-radius: 5px;">
+                <h5>Select a Date & Time</h5>
+                <div id="calendar" class="calendar">
+                    <div class="header">
+                        <span class="prev">&lt;</span>
+                        <span class="month-year"></span>
+                        <span class="next">&gt;</span>
+                    </div>
+                    <div class="days">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                </div>
+                <div class="time-selection" style="margin-top: 5px; margin-bottom:10px;">
+                    <h5>Select Time</h5>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">8:00 AM</button>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">9:00 AM</button>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">10:00 AM</button>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">11:00 AM</button>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">12:00 PM</button>
+                    <br /> <br>
+
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">1:00 PM</button>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">2:00 PM</button>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">3:00 PM</button>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="margin-right: 5px; width: 80px;">4:00 PM</button>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill time-button" style="width: 80px;">5:00 PM</button>
+                </div>
+            </div>
+            <div style="padding: 20px; border-radius: 5px;">
+                <div class="card mb-2" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Pet to Consult</h5>
+                        <select class="form-select" aria-label="Dropdown 1">
+                            <option selected>Choose Pet</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card mb-2" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Grooming Services</h5>
+                        <select class="form-select" aria-label="Dropdown 2">
+                            <option selected>Choose Services</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card mb-2" style="max-width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Symptoms or Signs</h5>
+                        <input type="text" class="form-control" placeholder="Enter something...">
+                    </div>
+                </div>
+                <button id="book-1-btn" class="btn" style="background-color: #A1AD6A; color:#fff; font:size:14px; font-weight:bold;">Book &rarr;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="details-section" class="section">
+        <div class="section-description" data-description="2">
+
+            <div class="grid-container" style="display: grid; grid-template-columns: fr fr; gap: 50px; width: 80%; height: auto; margin: 0 auto;">
+                <div class="section-description bigger" data-description="2" style="margin-top: -10px; background-color: #ECEEED; padding: 15px; font-size: 17px; text-align: center; border-radius: 10px; font-family: 'Roboto', sans-serif;">
+                    <h1 style="color: #666B44; margin: 0 auto; font-weight: bold;">#QC0025</h1>
+
+                    <table style="margin: 0 auto; text-align: left;">
+
+
+                        <tr>
+                            <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 25px;">Pet Name:</strong></td>
+                            <td class="col-md-4" style="font-family: 'Roboto', sans-serif, ;font-size: 25px;">Unna</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 25px;">Owner:</strong></td>
+                            <td class="col-md-4" style="font-family: 'Roboto', sans-serif; font-size: 25px;">Paitlyn Botosh</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-3" style="padding-right: 5px;"><strong style="font-size: 25px;">Grooming Service:</strong></td>
+                            <td class="col-md-3" style="font-family: 'Roboto', sans-serif; font-size: 25px;">N/A</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 25px;">Health Check up:</strong></td>
+                            <td class="col-md-4" style="font-family: 'Roboto', sans-serif; font-size: 25px;">Yes</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 25px;">Clinic Name:</strong></td>
+                            <td class="col-md-4" style="font-family: 'Roboto', sans-serif;font-size: 25px;">Vets in Practice Animal Hospital</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 25px;">Clinic Address:</strong></td>
+                            <td class="col-md-4" style="font-family: 'Roboto', sans-serif;font-size: 25px;">Blue Ridge, 220 C5 Katipunan Ave, Project 4, Quezon City</td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 25px;">Date:</strong> <span style="font-size: 25px; margin-left: 20px;">04-26-24</span></td>
+                            <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 25px;">Time:</strong> <span style="font-size: 25px; margin-left: 20px;">10:00 AM</span></td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="checkbox-container" style="display: flex; align-items: center; justify-content: center; margin-bottom: auto; padding-top: 30px;">
+                <input type="checkbox" id="confirmation-checkbox" style="width: 25px; height: 25px; margin-right: 10px; background-color: yellow; border-radius: 4px; border: 1px solid #ccc;">
+                <label for="confirmation-checkbox" id="confirmation-label" style="font-size: 18px; font-family: 'Roboto', sans-serif; margin: 0;">I hereby confirm the details above are correct.</label>
+            </div>
+
+            <div class="button-container" style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                <a asp-controller="Home" asp-action="Appointment" class="btn btn-secondary" style="padding: 10px 80px; border-radius: 5px; cursor: pointer; margin-right: 50px;">Edit Details</a>
+                <button id="confirm-button" style="padding: 10px 80px; background-color: #A1AD6A; color: white; border: none; border-radius: 5px; cursor: pointer;">OKAY</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="review-section" class="section" style="display: none;">
+        <div class="grid-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
+            <!-- First column -->
+            <div class="section-description bigger" data-description="3" style="background-color: #ECEEED; padding: 15px; font-size: 17px; text-align: center; border-radius: 10px; font-family: 'Roboto', sans-serif;">
+                <h1 style="color: #666B44;margin-top:30px;margin-bottom:30px;font-weight:bold ">#QC0025</h1>
+                <table style="margin: auto; text-align: left;">
+                    <tr>
+                        <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 20px;">Pet Name:</strong></td>
+                        <td class="col-md-4" style="font-family: 'Roboto', sans-serif;">Unna</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 20px;">Owner:</strong></td>
+                        <td class="col-md-4" style="font-family: 'Roboto', sans-serif;">Paitlyn Botosh</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-3" style="padding-right: 5px;"><strong style="font-size: 20px;">Grooming Service:</strong></td>
+                        <td class="col-md-3" style="font-family: 'Roboto', sans-serif;">N/A</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 20px;">Health Check up:</strong></td>
+                        <td class="col-md-4" style="font-family: 'Roboto', sans-serif;">Yes</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 20px;">Clinic Name:</strong></td>
+                        <td class="col-md-4" style="font-family: 'Roboto', sans-serif;">Vets in Practice Animal Hospital</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 20px;">Clinic Address:</strong></td>
+                        <td class="col-md-4" style="font-family: 'Roboto', sans-serif;">Blue Ridge, 220 C5 Katipunan Ave, Project 4, Quezon City</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 20px;">Date:</strong></td>
+                        <td class="col-md-4" style="font-family: 'Roboto', sans-serif;">04-26-24</td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-2" style="padding-right: 5px;"><strong style="font-size: 20px;">Time:</strong></td>
+                        <td class="col-md-4" style="font-family: 'Roboto', sans-serif;">10:00 AM</td>
+                    </tr>
+                </table>
+            </div>
+
+
+
+            <div class="grid-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px;">
+                <!-- First column -->
+                <div class="section-description bigger" data-description="3" style="background-color: #ECEEED; padding: 80px; border-radius: 10px; font-size: 20px; font-family: 'Poppins', sans-serif;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-check-circle" style="font-size: 120px; color:#00E000; margin-bottom: 20px; display: block;"></i>
+                        <h2 style="font-family: 'Poppins', sans-serif; font-weight: bold; white-space: nowrap;">Appointment Booked</h2>
+                        <p style="margin-bottom: 50px; white-space: nowrap;">We care for your furry friends!</p>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn-like" style="margin-bottom: 10px; display: inline-block; text-align: center;">
+                            Go to Home
+                        </a>
+                        <a asp-area="" asp-controller="Home" asp-action="Appointment" type="button" style="background-color: #A1AD6A; color: white; font-size:24px; font-weight: bold; border: none; border-radius: 10px; padding: 5px 50px; display: block; margin: 0 auto;">Book Again</a>
+                    </div>
+
+
+
+
+
+                </div>
+
+                <!-- Second column -->
+                <div style="position: absolute; width: 200px; height: 200px; left: 1002px; top: 330px; background: url(check.png);">
+                    <!-- This div represents the rectangle with the specified styles -->
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+            const sectionTitles = document.querySelectorAll('.section-title');
+            const sectionDescriptions = document.querySelectorAll('.section-description');
+            const confirmButton = document.getElementById('confirm-button');
+            const confirmationCheckbox = document.getElementById('confirmation-checkbox');
+            const book1Btn = document.getElementById('book-1-btn');
+
+            function toggleActive(element) {
+                sectionTitles.forEach(title => {
+                    title.classList.remove('active');
+                    title.querySelector('.dot').classList.remove('shaded');
+                });
+                element.classList.add('active');
+                element.querySelector('.dot').classList.add('shaded');
+
+                const sectionNumber = element.dataset.section;
+                sectionDescriptions.forEach(description => {
+                    description.classList.remove('active');
+                    if (description.dataset.description === sectionNumber) {
+                        description.classList.add('active');
+                    }
+                });
+            }
+
+            sectionTitles.forEach(title => {
+                title.addEventListener('click', function () {
+                    toggleActive(this);
+                });
+            });
+
+            // Function to enable/disable the button based on checkbox state
+            function toggleButtonState() {
+                if (confirmationCheckbox.checked) {
+                    confirmButton.removeAttribute('disabled');
+                } else {
+                    confirmButton.setAttribute('disabled', 'disabled');
+                }
+            }
+
+            // Add event listener to the checkbox
+            confirmationCheckbox.addEventListener('change', toggleButtonState);
+
+            // Add event listener to the button
+            confirmButton.addEventListener('click', function () {
+                // Change description to "3"
+                sectionDescriptions.forEach(description => {
+                    description.classList.remove('active');
+                    if (description.dataset.description === "3") {
+                        description.classList.add('active');
+                    }
+                });
+
+                // Remove active class from titles
+                sectionTitles.forEach(title => {
+                    title.classList.remove('active');
+                    title.querySelector('.dot').classList.remove('shaded');
+                });
+
+                // Find the title with data-section="3" and add active class
+                const targetTitle = document.querySelector('[data-section="3"]');
+                if (targetTitle) {
+                    targetTitle.classList.add('active');
+                    targetTitle.querySelector('.dot').classList.add('shaded');
+                }
+            });
+
+            // Function to handle click on book button
+            book1Btn.addEventListener('click', function () {
+                // Change description to "2"
+                sectionDescriptions.forEach(description => {
+                    description.classList.remove('active');
+                    if (description.dataset.description === "2") {
+                        description.classList.add('active');
+                    }
+                });
+
+                // Remove active class from titles
+                sectionTitles.forEach(title => {
+                    title.classList.remove('active');
+                    title.querySelector('.dot').classList.remove('shaded');
+                });
+
+                // Find the title with data-section="2" and add active class
+                const targetTitle = document.querySelector('[data-section="2"]');
+                if (targetTitle) {
+                    targetTitle.classList.add('active');
+                    targetTitle.querySelector('.dot').classList.add('shaded');
+                }
+            });
+
+            // Initially disable the button
+            toggleButtonState();
+        </script>
+
+        <script>
+            // JavaScript for Calendar Functionality
+            const calendar = document.getElementById('calendar');
+            const prevBtn = calendar.querySelector('.prev');
+            const nextBtn = calendar.querySelector('.next');
+            const monthYear = calendar.querySelector('.month-year');
+            const daysContainer = calendar.querySelector('.days');
+
+            let currentDate = new Date(); // Ensure currentDate is set correctly
+
+            function generateCalendar(year, month) {
+                console.log('Generating calendar for:', getMonthName(month), year);
+                daysContainer.innerHTML = '';
+                monthYear.textContent = `${getMonthName(month)} ${year}`;
+
+                const firstDayOfMonth = new Date(year, month, 1);
+                const lastDayOfMonth = new Date(year, month + 1, 0);
+                const startingDay = firstDayOfMonth.getDay();
+                const totalDays = lastDayOfMonth.getDate();
+
+                for (let i = 0; i < startingDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    daysContainer.appendChild(emptyDay);
+                }
+
+                for (let i = 1; i <= totalDays; i++) {
+                    const day = document.createElement('div');
+                    day.textContent = i;
+                    day.addEventListener('click', () => {
+                        // Handle date selection here
+                        console.log(`Selected date: ${getMonthName(month)} ${i}, ${year}`);
+                    });
+                    daysContainer.appendChild(day);
+                }
+            }
+
+            function getMonthName(month) {
+                const monthNames = [
+                    "January", "February", "March",
+                    "April", "May", "June", "July",
+                    "August", "September", "October",
+                    "November", "December"
+                ];
+                return monthNames[month];
+            }
+
+            prevBtn.addEventListener('click', () => {
+                console.log('Previous button clicked');
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            });
+
+            nextBtn.addEventListener('click', () => {
+                console.log('Next button clicked');
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            });
+
+            // Initialize calendar
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+
+        </script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const confirmButton = document.getElementById("confirm-button");
+
+                // Function to navigate to the next section
+                confirmButton.addEventListener("click", function () {
+                    // Hide the current section (Details)
+                    document.getElementById('details-section').style.display = 'none';
+
+                    // Show the next section (Review)
+                    document.getElementById('review-section').style.display = 'block';
+
+                    // Optionally, update active section indicator (e.g., dot color change)
+                    document.querySelector('.section-title[data-section="2"] .dot').classList.remove('shaded');
+                    document.querySelector('.section-title[data-section="3"] .dot').classList.add('shaded');
+                });
+            });
+        </script>
+
+</body>
+</html>

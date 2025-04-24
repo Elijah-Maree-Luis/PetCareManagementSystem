@@ -1,0 +1,65 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+    {
+        var userName = User.Identity?.Name;
+        var firstLetter = !string.IsNullOrEmpty(userName) ? userName[0].ToString().ToUpper() : "";
+
+        <div class="d-flex align-items-center">
+        <li class="nav-item">
+            <a class="nav-item" runat="server" href="~/">
+                <img src="~/images/icons/cart.png" alt="Cart" class="cart-icon img-fluid" style="height:auto; width: 25px; margin-right: 5px; margin-left:5px; filter: brightness(0) invert(1);">
+            </a>
+        </li>
+        <li>
+            <a class="nav-item" runat="server" href="~/">
+                <img src="~/images/icons/notification.png" alt="Cart" class="cart-icon img-fluid" style="height:auto; width: 25px; margin-right: 10px; margin-left:10px; filter: brightness(0) invert(1);">
+            </a>
+        </li>
+        <div class="dropdown">
+            <a class="nav-link text-dark dropdown-toggle" href="#" role="button" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="rounded-circle text-white d-inline-flex align-items-center justify-content-center" style="width: 30px; height: 30px; background-color: #99A17B;">
+                        @firstLetter
+                </div>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li>
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                        <i class="bi bi-pencil-square"></i> Edit Profile
+                    </a>
+                </li>
+                <li style="width: 100%; text-align: center;">
+                    <hr style="margin-top: 0.25rem; margin-bottom: 0.25rem; width: 100%;"> <!-- Centered horizontal line -->
+                </li>
+                <li>
+                    <a class="dropdown-item form-inline" asp-area="Identity" asp-controller="Pet" asp-action="PetDetails">
+                        <img src="~/images/icons/paw.png" alt="Paw" class="icon" style="height:auto; width: 18px; margin-right: 0px;"> Pet Details <!-- Paw Icon Image -->
+                    </a>
+                </li>
+                <li class="nav-item" style="margin-left:17px;">
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" class="nav-link btn btn-link text-dark">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        </div>
+    }
+    else
+    {
+        <a class="navbar-brand" asp-area="Identity" asp-page="/Account/Login">
+            <img src="~/images/icons/cart.png" alt="Cart" class="cart-icon img-fluid" style="height:auto; width: 30px; margin-right: 10px; margin-left:10px; filter: brightness(0) invert(1);">
+        </a>
+
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login" style="font-size: 16px; font-weight:bold;">Login</a>
+        </li>
+    }
+</ul>
+

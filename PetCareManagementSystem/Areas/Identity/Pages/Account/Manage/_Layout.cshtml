@@ -1,0 +1,29 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<!--<h1>Manage your account</h1> -->
+
+<div style="text-align: center;">
+    <!--  <h2>Change your account settings</h2>-->
+
+    <div>
+        <!-- Center the content with a max-width -->
+
+        <div class="d-flex justify-content-center">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

@@ -1,0 +1,62 @@
+﻿@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Furfect Care";
+}
+
+@{
+    // Get the user's given name claim
+    var givenNameClaim = User.FindFirst(ClaimTypes.GivenName);
+    // Check if the given name claim exists
+    var givenName = givenNameClaim != null ? givenNameClaim.Value : string.Empty;
+    // Get the user's picture claim
+    var pictureClaim = User.FindFirst("urn:google:picture");
+    // Check if the picture claim exists
+    var pictureUrl = pictureClaim != null ? pictureClaim.Value : string.Empty;
+}
+
+
+
+<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<body style="background-color:#EFE5DC;">
+
+    <div style="background-color: #99A27F; padding: 40px; margin: 0 auto; width: 80%;">
+        <div class="row position-relative">
+            <div class="col-md-6" style="left:20px;">
+                <h1 style="color: white; font-family: 'Roboto Flex', sans-serif; font-weight:600;">Hello<span style="color: white;"> @givenName!</span></h1>
+                <p style="color: white; font-family: 'Roboto', sans-serif; font-weight: 300;">Let's take care of your <br> little family!</p>
+            </div>
+            <div class="col-md-6 position-absolute" style="top: 0; right: 0;">
+                <img src="~/images/icons/calendar.png" alt="Image" style="width: 38%; position: absolute; top: -25px; right: 250px; z-index: 1;">
+
+                <p style="color: white; font-family: 'Roboto', sans-serif; font-weight: 300; position: absolute; top: 20px; left: 170px; z-index: 1;">Let's schedule an<br>appointment</p>
+                <div style="position: absolute; top:75px; right: 120px; z-index: 2;">
+                    <!-- Increased z-index -->
+                    <a asp-area="" asp-controller="Home" asp-action="Appointment" class="btn btn-primary rounded-pill" style="background-color: #666B44; position: relative; width: 160px; font-family: 'Roboto', sans-serif;  border: none;">
+                        Book now <img src="~/images/icons/arrow.png" alt="Arrow" style="width: 30px; height:25px;">
+                    </a>
+                </div>
+            </div>
+            <div>
+                <div style="position: absolute; top:25%; left:-170px;z-index: 1;">
+                    <img src="~/images/photo/animals.png" style="width: 64%;" />
+                </div>
+                <div style="position: absolute; top: 140%; left: 500px; z-index: 1;">
+                    <p style="color: black; font-family: 'Staatliches', sans-serif; font-weight: 300; font-size: 36px; margin-bottom: 0px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.40);">Providing <br> Pawsome Care <br> for Your Furry <br> Friends</p>
+                    <p style="color: #666B44; font-family: 'Source Serif Pro', sans-serif; font-weight: 600; font-size: 14px; margin-top: 0px;">Where Every Pets Deserve the Best!</p>
+                    <div style="margin-top: 10px;">
+                        <a asp-area="" asp-controller="Home" asp-action="About" class="btn btn-primary rounded-pill" style="background-color: #666B44; width: 160px; height: 30px; font-size: 12px;  border: none; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                            Our Services
+                            <img src="~/images/icons/arrow.png" alt="Arrow" style="width: 30px; height:20px; margin-left: 10px; padding:0px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+</body>

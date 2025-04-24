@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PetCareManagementSystem.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .nav-item:not(.dropdown) > .nav-link {
+            position: relative; /* Required for absolute positioning */
+            display: inline-block; /* Allow centering the underline */
+            text-decoration: none; /* Remove the default underline */
+        }
+
+            .nav-item:not(.dropdown) > .nav-link::after {
+                content: ""; /* Add pseudo-element for underline */
+                position: absolute; /* Position the underline */
+                left: 50%; /* Start from the center */
+                bottom: -1px; /* Add spacing between the text and underline */
+                width: 0; /* Initially no width */
+                height: 1px; /* Underline height */
+                background-color: #666B44; /* Underline color */
+                transform: translateX(-50%); /* Center the underline */
+                transition: width 0.3s; /* Smooth transition for width */
+            }
+
+        .nav-item:not(.dropdown):hover > .nav-link::after {
+            width: 100%; /* Expand underline on hover */
+        }
+
+        .nav-item.active > .nav-link {
+            font-weight: bold; /* Make the text bold when active */
+            color: #666B44 !important;
+        }
+
+        .nav-item:hover .nav-link {
+            color: #666B44 !important; /* Change the color on hover */
+        }
+
+    </style>
+
+
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light py-0" style="background-color:#C9BFB5; box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); margin-bottom: 1rem; font-size:15px;">
+            <div class="container">
+                <a class="navbar-brand mx-auto" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/icons/PetCareLogo1.png" alt="Logo" style="max-height: 50px;"> <img src="~/images/icons/FurfectCare.png" alt="Logo" style="max-height: 40px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-end pe-4">
+                    <ul class="navbar-nav">
+                        <li class="nav-item @(ViewBag.ActivePage == "Home" ? "active" : "")">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        <li class="nav-item @(ViewBag.activePage == "Shop" ? "active" : "")">
+                            <a class="nav-link text-dark" asp-view"="Home" asp-controller="Home" asp-action="Shop">Shop</a>
+                        </li>
+
+                        <li class="nav-item @(ViewBag.ActivePage == "Appointment" ? "active" : "")">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Add">Appointment</a>
+                        </li>
+                        <li class="nav-item @(ViewBag.ActivePage == "Article" ? "active" : "")">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Article">Article & Tips</a>
+                        </li>
+                        <li class="nav-item dropdown @(ViewBag.ActivePage == "About" ? "active" : "")">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                About Us <!-- Initial text, can be anything -->
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownAbout">
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="About" onclick="changeNavName('About Us')">
+                                        <i class="bi bi-info-circle-fill"></i> About Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="HelpCenter" onclick="changeNavName('Help Center')">
+                                        <i class="bi bi-question-circle-fill"></i> Help Center
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <form class="form-inline" style="margin-left:15px;">
+                                <div class="input-group border rounded-pill" style="width: 250px; height:p; background-color: #99A17B;">
+                                    <input class="form-control border-0 rounded-pill" type="search" placeholder="Search" aria-label="Search"
+                                           style="outline: none; box-shadow: none;">
+                                    <button class="btn rounded-pill" type="submit" style="outline: none;" onfocus="this.blur()">
+                                        <i class="bi bi-search" style="color: #FFFFFF;"></i>
+                                    </button>
+                                </div>
+                            </form>
+
+                        </li>
+             
+                    </ul>
+                </div>
+                <partial name="_LoginPartial" />
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+<footer class="border-top footer text-muted py-0" style="z-index: 2; height: auto; bottom: 0; width: 100%; background-color: #C9BFB5; padding: 0px 0;">
+    <div class="container" style="font-size: 14px; display: flex; justify-content: center; align-items: center;">
+        &copy; 2024.PetCareManagementSystem.QuezonCityUniversity - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
